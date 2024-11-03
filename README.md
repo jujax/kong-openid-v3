@@ -1,6 +1,6 @@
 `Finally we have a fix for request to the redirect_uri path but there's no session state found by upgrading lua-resty-openidc to 1.8.0-1`
 
-## This project wouldn’t be possible without the amazing work of nokia/kong-oidc and revomatico/kong-oidc. Thank you!"
+## This project wouldn’t be possible without the amazing work of nokia/kong-oidc and revomatico/kong-oidc. Thank you!
 https://github.com/nokia/kong-oidc
 
 https://github.com/revomatico/kong-oidc
