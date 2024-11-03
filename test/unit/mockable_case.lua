@@ -9,6 +9,8 @@ function MockableCase:setUp()
     DEBUG = "debug",
     ERR = "error",
     HTTP_UNAUTHORIZED = 401,
+    HTTP_FORBIDDEN = 403,
+    HTTP_INTERNAL_SERVER_ERROR = 500,
     ctx = {},
     header = {},
     var = {request_uri = "/"},
@@ -31,6 +33,34 @@ function MockableCase:setUp()
   self.ngx = _G.ngx
   _G.ngx = self.mocked_ngx
 
+  self.mocked_kong = {
+    client = {
+      authenticate = function(consumer, credential)
+        ngx.ctx.authenticated_consumer = consumer
+        ngx.ctx.authenticated_credential = credential
+      end
+    },
+    service = {
+      request = {
+        clear_header = function(...) end,
+        set_header = function(...) end
+      }
+    },
+    response = {
+      error = function(status)
+        ngx.status = status
+      end
+    },
+    log = {
+      err = function(...) end
+    },
+    ctx = {
+      shared = {}
+    }
+  }
+  self.kong = _G.kong
+  _G.kong = self.mocked_kong
+
   self.resty = package.loaded.resty
   package.loaded["resty.http"] = nil
   package.preload["resty.http"] = function()
@@ -50,6 +80,7 @@ end
 function MockableCase:tearDown()
   MockableCase.super:tearDown()
   _G.ngx = self.ngx
+  _G.kong = self.kong
   package.loaded.resty = self.resty
   package.loaded.cjson = self.cjson
 end
