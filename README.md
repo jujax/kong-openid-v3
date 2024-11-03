@@ -262,3 +262,7 @@ To tear the environment down:
 ```shell
 ./bin/teardown-env.sh
 ```
+
+```sh
+luarocks upload --api-key=$LUAT_ROCKS_API_KEY kong-openid-v3-2.0.0-2.rockspec
+```
