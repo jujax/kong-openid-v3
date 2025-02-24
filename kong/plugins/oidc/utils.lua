@@ -35,9 +35,9 @@ function M.get_redirect_uri(ngx)
     elseif path == "/" then
       return "/cb"
     elseif path:sub(-1) == "/" then
-      return path:sub(1, -1)
-    else
       return path
+    else
+      return path .. "/"
     end
   end
 
