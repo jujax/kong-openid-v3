@@ -36,7 +36,6 @@ function M.get_redirect_uri(ngx)
     local args = ngx.req.get_uri_args()
     print("path: " .. path)
     if args and args.code then
-      print("args: " .. cjson.encode(args))
       return path
     elseif path == "/" then
       return "/cb"
