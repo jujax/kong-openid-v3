@@ -21,15 +21,21 @@ function M.get_redirect_uri(ngx)
   local function drop_query()
     local uri = ngx.var.request_uri
     local x = uri:find("?")
+    print("uri: " .. uri)
+    print("x: " .. x)
     if x then
+      print("returning: " .. uri:sub(1, x - 1))
       return uri:sub(1, x - 1)
     else
+      print("returning: " .. uri)
       return uri
     end
   end
 
   local function tackle_slash(path)
     local args = ngx.req.get_uri_args()
+    print("path: " .. path)
+    print("args: " .. cjson.encode(args))
     if args and args.code then
       return path
     elseif path == "/" then
